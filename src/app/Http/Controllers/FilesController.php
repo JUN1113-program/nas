@@ -14,7 +14,7 @@ class FilesController extends Controller
      */
     public function index()
     {
-        $import = glob('/file/*');
+        $import = glob('/work/storage/app/files/*');
         $fileName = [];
         foreach ($import as $value) {
             array_push($fileName, basename($value));
@@ -30,7 +30,7 @@ class FilesController extends Controller
      */
     public function create()
     {
-        //
+        return view("file.create");
     }
 
     /**
@@ -41,7 +41,9 @@ class FilesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fileName = $request->file->getClientOriginalName();
+        $request->file->storeAs("files", $fileName);
+        return redirect(route("files.index"));
     }
 
     /**
